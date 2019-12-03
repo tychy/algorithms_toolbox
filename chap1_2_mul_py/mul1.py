@@ -54,7 +54,7 @@ def mul_nn(a, b):
             # out of bound　にならないことは保証されているはず
     ans = ans[::-1]
     # print(int("".join(list(map(str, ans)))))
-    return
+    return ans
 
 
 if __name__ == '__main__':
