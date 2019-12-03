@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import math
 import random
 from tqdm import tqdm
+import pandas as pd
 
 
 def main():
@@ -27,6 +28,8 @@ def main():
     plt.plot(x, y, marker='^')
     plt.yscale('log')
     plt.savefig("mul.png")
+    df = pd.DataFrame({'2**': x, 'time': y})
+    df.to_csv("mul.csv", index=False)
 
 
 if __name__ == '__main__':
