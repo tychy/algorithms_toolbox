@@ -34,20 +34,20 @@ def mul1(a_ls, b):
     return ans
 
 
-def mul_nn(a, b):
-    if len(b) > len(a):
-        a, b = b, a
-    ans = [0] * (len(a) + len(b) + 1)
+def mul_nn(a_ls, b_ls):
+    if len(b_ls) > len(a_ls):
+        a_ls, b_ls = b_ls, a_ls
+    ans = [0] * (len(a_ls) + len(b_ls) + 1)
 
-    for i in range(len(b)):
-        p = mul1(a, b[i])
+    for i in range(len(b_ls)):
+        p = mul1(a_ls, b_ls[i])
         p = p[::-1]  # p : len(a) + 1
         carry = 0
-        for j in range(i, i + len(a) + 1):
+        for j in range(i, i + len(a_ls) + 1):
             carry, d = add_3(ans[j], carry, p[j - i])
             ans[j] = d
         if carry > 0:
-            ans[i + len(a) + 1] = ans[i + len(a) + 1] + carry
+            ans[i + len(a_ls) + 1] = ans[i + len(a_ls) + 1] + carry
             # out of bound　にならないことは保証されているはず
     ans = ans[::-1]
     # print(int("".join(list(map(str, ans)))))
