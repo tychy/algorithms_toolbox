@@ -12,7 +12,8 @@ def main():
         keta = 8 * (2**i)
         a = random.randrange(10 ** keta, 10 ** (keta + 1))
         b = random.randrange(10 ** keta, 10 ** (keta + 1))
-
+        a = list(map(int, list(str(a))))[::-1]
+        b = list(map(int, list(str(b))))[::-1]
         # 計測部
         t1 = time.time()
         add_nn(a, b)

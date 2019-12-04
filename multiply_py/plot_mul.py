@@ -5,6 +5,7 @@ import math
 import random
 from tqdm import tqdm
 import pandas as pd
+from utils import to_ls
 
 
 def main():
@@ -14,7 +15,8 @@ def main():
         keta = 8 * (2**i)
         a = random.randrange(10 ** keta, 10 ** (keta + 1))
         b = random.randrange(10 ** keta, 10 ** (keta + 1))
-
+        a = to_ls(a)
+        b = to_ls(b)
         # 計測部
         t1 = time.time()
         mul_nn(a, b)

@@ -1,6 +1,7 @@
 from mul1 import mul_nn
 import random
 from tqdm import tqdm
+from utils import to_ls, int_ls
 
 
 def main():
@@ -8,9 +9,11 @@ def main():
         keta = 8 * (2**i)
         a = random.randrange(10 ** keta, 10 ** (keta + 1))
         b = random.randrange(10 ** keta, 10 ** (keta + 1))
+        a = to_ls(a)
+        b = to_ls(b)
         ans = mul_nn(a, b)
-        true_checksum = ((a % 9) * (b % 9)) % 9
-        calc_checksum = int("".join(list(map(str, ans)))) % 9
+        true_checksum = ((int_ls(a) % 9) * (int_ls(b) % 9)) % 9
+        calc_checksum = int_ls(ans) % 9
         print(true_checksum == calc_checksum)
 
 

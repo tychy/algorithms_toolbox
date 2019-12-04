@@ -1,46 +1,27 @@
 import random
-from utils import int_ls, to_ls
+from mul1 import add, add_3, mul_2, mul1, mul_nn
+from add import add_nn
 
 
-def mul_2(l, m):
-    ans = (l * m)
-    return ans // 10, ans % 10
-
-
-def add(l, m):
-    ans = (l + m)
-    return ans // 10, ans % 10
-
-
-def add_3(l, m, n):
-    ans = (l + m + n)
-    return ans // 10, ans % 10
-
-
-def mul1(a_ls, b):
-    # print(a * b)
-    ans = [0] * (len(a_ls) + 1)
-    carry = 0
-    prev_c = 0
-    for i in range(len(a_ls)):
-        c, d = mul_2(a_ls[i], b)
-        carry, tmp = add_3(d, prev_c, carry)
-        ans[i] = tmp
-        prev_c = c
-    ans[-1] = prev_c + carry
-    ans = ans[::-1]
-    # print(ans)
-    # print(int("".join(list(map(str, ans)))))
-    return ans
-
-
-def mul_nn(a, b):
+def karatsuba_nn(a, b, n0):
+    inta = a
+    a = list(map(int, list(str(a))))[::-1]
+    b = list(map(int, list(str(b))))[::-1]
     if len(b) > len(a):
         a, b = b, a
+    if len(b) <= n0:
+        return int_ls(mul_nn(a, b))
+    k = len(a) // 2
     ans = [0] * (len(a) + len(b) + 1)
+    a0 = a[:k]
+    a1 = a[k:]
+    b0 = b[:k]
+    b1 = b[k:]
+
+
 
     for i in range(len(b)):
-        p = mul1(a, b[i])
+        p = mul1(inta, b[i])
         p = p[::-1]  # p : len(a) + 1
         carry = 0
         for j in range(i, i + len(a) + 1):
@@ -63,9 +44,6 @@ if __name__ == '__main__':
         keta = 8 * (2**i)
         a = random.randrange(10 ** keta, 10 ** (keta + 1))
         b = random.randrange(10 ** keta, 10 ** (keta + 1))
-        a = to_ls(a)
-        b = to_ls(b)
         # print(a * b)
         # print(mul_nn(a, b))
-        print((int_ls(a) * int_ls(b)) == mul_nn(a, b))
-
+        print((a * b) == mul_nn(a, b))

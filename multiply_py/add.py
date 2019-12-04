@@ -1,3 +1,6 @@
+from utils import int_ls, to_ls
+
+
 def add(l, m):
     ans = (l + m)
     return ans // 10, ans % 10
@@ -10,8 +13,6 @@ def add_3(l, m, n):
 
 def add_nn(a, b):
     # print(a + b)
-    a = list(map(int, list(str(a))))[::-1]
-    b = list(map(int, list(str(b))))[::-1]
     if len(b) > len(a):
         a, b = b, a
     ans = [0] * (len(a) + 1)
@@ -31,10 +32,12 @@ def add_nn(a, b):
     ans = ans[::-1]
     # print(int("".join(list(map(str, ans)))))
 
-    return
+    return ans
 
 
 if __name__ == '__main__':
     a = 123850
     b = 123856
+    a = to_ls(a)
+    b = to_ls(b)
     add_nn(a, b)

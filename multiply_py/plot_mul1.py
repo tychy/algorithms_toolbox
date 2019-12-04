@@ -3,6 +3,7 @@ from mul1 import mul1
 import matplotlib.pyplot as plt
 import math
 import random
+from utils import to_ls
 
 
 def main():
@@ -12,7 +13,8 @@ def main():
         keta = 8 * (2**i)
         a = random.randrange(10 ** keta, 10 ** (keta + 1))
         b = random.randint(1, 10)
-
+        a = to_ls(a)
+        b = b
         # 計測部
         t1 = time.time()
         mul1(a, b)
