@@ -1,5 +1,5 @@
 import time
-from mul1 import mul_nn
+from karatsuba import karatsuba_nn
 import matplotlib.pyplot as plt
 import math
 import random
@@ -8,7 +8,7 @@ import pandas as pd
 from utils import to_ls
 
 
-def pl_mul(reps):
+def pl_karatsuba(reps, n0):
     x = []
     y = []
     for i in tqdm(range(reps)):
@@ -19,7 +19,7 @@ def pl_mul(reps):
         b = to_ls(b)
         # 計測部
         t1 = time.time()
-        mul_nn(a, b)
+        karatsuba_nn(a, b, n0)
         t2 = time.time()
 
         elapsed_time = t2-t1
@@ -29,10 +29,11 @@ def pl_mul(reps):
     # 描画
     plt.plot(x, y, marker='^')
     plt.yscale('log')
-    plt.savefig("mul.png")
+    plt.savefig("karatsuba.png")
     df = pd.DataFrame({'2**': x, 'time': y})
-    df.to_csv("mul.csv", index=False)
+    df.to_csv("karatsuba_{}.csv".format(n0), index=False)
 
 
 if __name__ == '__main__':
-    pl_mul(13)
+    pl_karatsuba(13, 4)
+    pl_karatsuba(13, 32)
