@@ -1,5 +1,5 @@
 from utils import int_ls, to_ls
-
+import random
 
 def add(l, m):
     ans = (l + m)
@@ -23,21 +23,26 @@ def add_nn(a, b):
         carry, tmp = add_3(d, prev_c, carry)
         ans[i] = tmp
         prev_c = c
-
+    carry = prev_c + carry
+    prev_c = 0
     for i in range(len(b), len(a)):
         carry, tmp = add_3(a[i], prev_c, carry)
         ans[i] = tmp
         prev_c = 0
     ans[-1] = carry
-    ans = ans[::-1]
     # print(int("".join(list(map(str, ans)))))
-
+    while ans[-1] == 0 and len(ans) > 1:
+        ans.pop()
     return ans
 
 
 if __name__ == '__main__':
-    a = 123850
-    b = 123856
-    a = to_ls(a)
-    b = to_ls(b)
-    add_nn(a, b)
+    for i in range(8):
+        keta = 5 # 8 * (2**i)
+        a = random.randrange(10 ** keta, 10 ** (keta + 1))
+        b = random.randrange(10 ** keta, 10 ** (keta + 1))
+        a = to_ls(a)
+        b = to_ls(b)
+        # print(int_ls(a) + int_ls(b))
+        # print(int_ls(add_nn(a, b)))
+        print((int_ls(a) + int_ls(b)) == int_ls(add_nn(a, b)))

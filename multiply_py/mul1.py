@@ -28,7 +28,6 @@ def mul1(a_ls, b):
         ans[i] = tmp
         prev_c = c
     ans[-1] = prev_c + carry
-    ans = ans[::-1]
     # print(ans)
     # print(int("".join(list(map(str, ans)))))
     return ans
@@ -41,7 +40,7 @@ def mul_nn(a_ls, b_ls):
 
     for i in range(len(b_ls)):
         p = mul1(a_ls, b_ls[i])
-        p = p[::-1]  # p : len(a) + 1
+        p = p  # p : len(a) + 1
         carry = 0
         for j in range(i, i + len(a_ls) + 1):
             carry, d = add_3(ans[j], carry, p[j - i])
@@ -49,23 +48,39 @@ def mul_nn(a_ls, b_ls):
         if carry > 0:
             ans[i + len(a_ls) + 1] = ans[i + len(a_ls) + 1] + carry
             # out of bound　にならないことは保証されているはず
-    ans = ans[::-1]
     # print(int("".join(list(map(str, ans)))))
+
+    # while ans[-1] == 0 and len(ans) > 1:
+    #   ans.pop()
     return ans
 
 
 if __name__ == '__main__':
-    a = 993850
-    b = 901
-    mul_nn(a, b)
-
-    for i in range(14):
+    a = 9930033500
+    b = 9023510
+    a = to_ls(a)
+    b = to_ls(b)
+    print(int_ls(a) * int_ls(b))
+    print(int_ls(mul_nn(a, b)))
+    print((int_ls(a) * int_ls(b)) == int_ls(mul_nn(a, b)))
+    """
+    for i in range(8):
         keta = 8 * (2**i)
         a = random.randrange(10 ** keta, 10 ** (keta + 1))
         b = random.randrange(10 ** keta, 10 ** (keta + 1))
         a = to_ls(a)
         b = to_ls(b)
-        # print(a * b)
-        # print(mul_nn(a, b))
-        print((int_ls(a) * int_ls(b)) == mul_nn(a, b))
-
+        print(int_ls(a) * int_ls(b))
+        print(int_ls(mul_nn(a, b)))
+        print((int_ls(a) * int_ls(b)) == int_ls(mul_nn(a, b)))
+    
+    for i in range(8):
+        keta = 8 * (2**i)
+        a = random.randrange(10 ** keta, 10 ** (keta + 1))
+        b = random.randrange(10 ** keta, 10 ** (keta + 1))
+        a = to_ls(a)
+        b = to_ls(b)
+        print(int_ls(a) * int_ls(b))
+        print(int_ls(mul_nn(a, b)))
+        print((int_ls(a) * int_ls(b)) == int_ls(mul_nn(a, b)))
+    """

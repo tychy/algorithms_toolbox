@@ -1,49 +1,49 @@
 import random
-from mul1 import add, add_3, mul_2, mul1, mul_nn
+from mul1 import mul_nn
 from add import add_nn
+from sub import sub_nn
+from utils import int_ls, to_ls
 
 
-def karatsuba_nn(a, b, n0):
-    inta = a
-    a = list(map(int, list(str(a))))[::-1]
-    b = list(map(int, list(str(b))))[::-1]
-    if len(b) > len(a):
-        a, b = b, a
-    if len(b) <= n0:
-        return int_ls(mul_nn(a, b))
-    k = len(a) // 2
-    ans = [0] * (len(a) + len(b) + 1)
-    a0 = a[:k]
-    a1 = a[k:]
-    b0 = b[:k]
-    b1 = b[k:]
-
-
-
-    for i in range(len(b)):
-        p = mul1(inta, b[i])
-        p = p[::-1]  # p : len(a) + 1
-        carry = 0
-        for j in range(i, i + len(a) + 1):
-            carry, d = add_3(ans[j], carry, p[j - i])
-            ans[j] = d
-        if carry > 0:
-            ans[i + len(a) + 1] = ans[i + len(a) + 1] + carry
-            # out of bound　にならないことは保証されているはず
-    ans = ans[::-1]
-    # print(int("".join(list(map(str, ans)))))
+def karatsuba_nn(a_ls, b_ls, n0=4):
+    if len(b_ls) > len(a_ls):
+        a_ls, b_ls = b_ls, a_ls
+    if len(b_ls) <= n0:
+        return mul_nn(a_ls, b_ls)
+    k = len(a_ls) // 2
+    a0 = a_ls[:k]
+    a1 = a_ls[k:]
+    b0 = b_ls[:k]
+    b1 = b_ls[k:]
+    a1pa0 = add_nn(a1, a0)
+    b1pb0 = add_nn(b1, b0)
+    p1 = karatsuba_nn(a1pa0, b1pb0, n0)
+    p2 = karatsuba_nn(a1, b1, n0)
+    p0 = karatsuba_nn(a0, b0, n0)
+    p0pp2 = add_nn(p0, p2)
+    p1sp0pp1 = sub_nn(p1, p0pp2)
+    pright2 = add_nn(p1sp0pp1, p0[k:])
+    ans = p0[:k] + pright2[:k] + add_nn(p2, pright2[k:])
     return ans
 
 
 if __name__ == '__main__':
-    a = 993850
-    b = 901
-    mul_nn(a, b)
-
-    for i in range(14):
-        keta = 8 * (2**i)
+    a = 76732
+    b = 70600
+    a = to_ls(a)
+    b = to_ls(b)
+    karatsuba_nn(a, b)
+    for i in range(10000):
+        keta = 15 # 8 * (2**i)
         a = random.randrange(10 ** keta, 10 ** (keta + 1))
         b = random.randrange(10 ** keta, 10 ** (keta + 1))
-        # print(a * b)
-        # print(mul_nn(a, b))
-        print((a * b) == mul_nn(a, b))
+        a = to_ls(a)
+        b = to_ls(b)
+        # print(int_ls(a) * int_ls(b))
+        # print(int_ls(mul_nn(a, b)))
+        # print(int_ls(karatsuba_nn(a, b)))
+        # print((int_ls(a) * int_ls(b)) == int_ls(karatsuba_nn(a, b)))
+        if not ((int_ls(a) * int_ls(b)) == int_ls(karatsuba_nn(a, b))):
+            print(int_ls(a))
+            print(int_ls(b))
+
