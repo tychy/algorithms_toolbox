@@ -15,6 +15,8 @@ def add_nn(a, b):
     # print(a + b)
     if len(b) > len(a):
         a, b = b, a
+    if len(b) == 0:
+        return a
     ans = [0] * (len(a) + 1)
     carry = 0
     prev_c = 0
