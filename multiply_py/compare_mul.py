@@ -14,6 +14,9 @@ def main():
         print(fname)
         plt.plot(df, marker='^', label=fname)
     plt.legend()
+    plt.title("mul compare")
+    plt.xlabel("n : 2 ** x")
+    plt.ylabel("sec")
     plt.savefig("compare.png")
 
 
