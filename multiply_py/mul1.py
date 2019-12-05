@@ -56,6 +56,7 @@ def mul_nn(a_ls, b_ls):
 
 
 if __name__ == '__main__':
+    """
     a = 9930033500
     b = 9023510
     a = to_ls(a)
@@ -73,14 +74,3 @@ if __name__ == '__main__':
         print(int_ls(a) * int_ls(b))
         print(int_ls(mul_nn(a, b)))
         print((int_ls(a) * int_ls(b)) == int_ls(mul_nn(a, b)))
-    
-    for i in range(8):
-        keta = 8 * (2**i)
-        a = random.randrange(10 ** keta, 10 ** (keta + 1))
-        b = random.randrange(10 ** keta, 10 ** (keta + 1))
-        a = to_ls(a)
-        b = to_ls(b)
-        print(int_ls(a) * int_ls(b))
-        print(int_ls(mul_nn(a, b)))
-        print((int_ls(a) * int_ls(b)) == int_ls(mul_nn(a, b)))
-    """
